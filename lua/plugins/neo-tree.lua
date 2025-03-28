@@ -6,4 +6,8 @@ return {
     "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
   },
+  config = function()
+    -- Mapeia Neo-tree
+    vim.keymap.set('n', '<C-n>',':Neotree<CR>', { desc = 'Reveal Neo-tree'})
+  end
 }
