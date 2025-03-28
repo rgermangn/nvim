@@ -26,27 +26,6 @@ require("lazy").setup({
     spec = {
         -- import your plugins
         { import = "plugins" },
-        {
-          "nvim-treesitter/nvim-treesitter",
-          build = ":TSUpdate",
-          config = function ()
-            local configs = require("nvim-treesitter.configs")
-            configs.setup({
-              ensure_installed = { "lua", "vim", "vimdoc", "query", "javascript", "html", "css", "python", "dockerfile", "gitignore", "json", "php"},
-              sync_install = false,
-              highlight = { enable = true },
-              indent = { enable = true },  
-            })
-          end
-        },
-        {
-          "catppuccin/nvim",
-          name = "catppuccin",
-          priority = 1000,
-          config = function()
-            vim.cmd("colorscheme catppuccin")
-          end
-        },
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
