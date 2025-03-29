@@ -8,6 +8,6 @@ return {
   },
   config = function()
     -- Mapeia Neo-tree
-    vim.keymap.set('n', '<C-n>',':Neotree<CR>', { desc = 'Reveal Neo-tree'})
+    vim.keymap.set('n', '<C-n>',':Neotree toggle left<CR>', {})
   end
 }
