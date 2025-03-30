@@ -21,10 +21,15 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
     config = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities
+      })
       lspconfig.ruff.setup({
+        capabilities = capabilities,
         init_options = {
           settings = {
             -- Configurações do Ruff
@@ -54,10 +59,15 @@ return {
           }
         }
       })
-      lspconfig.ts_ls.setup({})
-      lspconfig.dockerls.setup({})
-      lspconfig.docker_compose_language_service.setup({})
-
+      lspconfig.ts_ls.setup({
+        capabilities = capabilities
+      })
+      lspconfig.dockerls.setup({
+        capabilities = capabilities
+      })
+      lspconfig.docker_compose_language_service.setup({
+        capabilities = capabilities
+      })
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
