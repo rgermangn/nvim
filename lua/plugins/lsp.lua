@@ -8,7 +8,8 @@ return {
 			config = function()
 				require("mason").setup({
 					pip = {
-						install_args = { "uv", "pip", "install" },
+						install_args = { "uv" },
+						-- install_args = { "uv", "pip", "install" },
 					},
 				})
 			end,
@@ -173,22 +174,22 @@ return {
 			-- But for many setups, the LSP (`tsserver`) will work just fine
 			ts_ls = {}, -- tsserver is deprecated
 			ruff = {},
-			pylsp = {
-				settings = {
-					pylsp = {
-						plugins = {
-							pyflakes = { enabled = false },
-							pycodestyle = { enabled = false },
-							autopep8 = { enabled = false },
-							yapf = { enabled = false },
-							mccabe = { enabled = false },
-							pylsp_mypy = { enabled = false },
-							pylsp_black = { enabled = false },
-							pylsp_isort = { enabled = false },
-						},
-					},
-				},
-			},
+			-- pylsp = {
+			-- 	settings = {
+			-- 		pylsp = {
+			-- 			plugins = {
+			-- 				pyflakes = { enabled = false },
+			-- 				pycodestyle = { enabled = false },
+			-- 				autopep8 = { enabled = false },
+			-- 				yapf = { enabled = false },
+			-- 				mccabe = { enabled = false },
+			-- 				pylsp_mypy = { enabled = false },
+			-- 				pylsp_black = { enabled = false },
+			-- 				pylsp_isort = { enabled = false },
+			-- 			},
+			-- 		},
+			-- 	},
+			-- },
 			html = { filetypes = { "html", "twig", "hbs" } },
 			cssls = {},
 			tailwindcss = {},
@@ -237,8 +238,8 @@ return {
 		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
-			"stylua", -- Used to format Lua code
-			"intelephense", -- Garante a instalação do LSP para PHP
+			"stylua",            -- Used to format Lua code
+			"intelephense",      -- Garante a instalação do LSP para PHP
 			"typescript-language-server", -- Garante a instalação do LSP para JS/TS
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
