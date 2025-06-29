@@ -135,30 +135,92 @@ return {
 			-- pyright = {},
 			-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 			ts_ls = {},
-			ruff = {},
-			pylsp = {
+			ruff = {
 				settings = {
-					pylsp = {
-						plugins = {
-							jedi = { enabled = true },
-							rope = { enabled = true },
-							mccabe = { enabled = false },
-							pylsp_mypy = { enabled = true },
-							pyflakes = { enabled = false },
-							pycodestyle = { enabled = false },
-							autopep8 = { enabled = false },
-							yapf = { enabled = false },
-							pylsp_black = { enabled = false },
-							pylsp_isort = { enabled = false },
-						},
+					configurationPreference = "filesystemFirst",
+					exclude = { ".venv/", "__pycache__/", ".git/", "build/" },
+					lineLength = 100,
+					fixAll = true,
+					organizeImports = true,
+					showSyntaxErrors = true,
+					logLevel = "info",
+					logFile = nil,
+					codeAction = {
+						disableRuleComment = { enable = true },
+						fixViolation = { enable = true },
+					},
+					lint = {
+						enable = true,
+						preview = true,
+						select = { "I", "F", "E", "W", "PL", "PT" },
+						extendSelect = nil,
+						ignore = nil,
+					},
+					format = {
+						preview = nil,
 					},
 				},
 			},
+			-- pylsp = {
+			-- 	settings = {
+			-- 		pylsp = {
+			-- 			configurationSources = {},
+			-- 			plugins = {
+			-- 				jedi = { enabled = true },
+			-- 				jedi_completion = { enabled = true },
+			-- 				jedi_definition = { enabled = true },
+			-- 				jedi_hover = { enabled = true },
+			-- 				jedi_references = { enabled = true },
+			-- 				jedi_signature_help = { enabled = true },
+			-- 				jedi_symbols = { enabled = true },
+			-- 				rope = { enabled = true },
+			-- 				rope_autoimport = { enabled = true },
+			-- 				rope_completion = { enabled = true },
+			-- 				mccabe = { enabled = false },
+			-- 				pylsp_mypy = { enabled = true },
+			-- 				pyflakes = { enabled = false },
+			-- 				pylint = { enabled = false },
+			-- 				pycodestyle = { enabled = false },
+			-- 				pydocstyle = { enabled = false },
+			-- 				flake8 = { enabled = false },
+			-- 				autopep8 = { enabled = false },
+			-- 				yapf = { enabled = false },
+			-- 				pylsp_black = { enabled = false },
+			-- 				pylsp_isort = { enabled = false },
+			-- 			},
+			-- 		},
+			-- 	},
+			-- },
 			html = { filetypes = { "html", "twig", "hbs" } },
 			cssls = {},
 			tailwindcss = {},
 			dockerls = {},
-			sqlls = {},
+			sqlls = {
+				settings = {
+					sqlLanguageServer = {
+						connections = {},
+						lint = {
+							rules = {
+								["align-column-to-the-first"] = "error",
+								["column-new-line"] = "error",
+								["linebreak-after-clause-keyword"] = "off",
+								["reserved-word-case"] = { "error", "upper" },
+								["space-surrounding-operators"] = "error",
+								["where-clause-new-line"] = "error",
+								["align-where-clause-to-the-first"] = "error",
+								["indent"] = { "error", 4 },
+								["comma-at-end-of-line"] = "error",
+								["function-case"] = { "error", "lower" },
+							},
+						},
+						format = {
+							indent = 4,
+							["keywordCase"] = "upper",
+							["identifierCase"] = "lower",
+						},
+					},
+				},
+			},
 			terraformls = {},
 			jsonls = {},
 			yamlls = {},
@@ -200,8 +262,8 @@ return {
 		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
-			"stylua",            -- Used to format Lua code
-			"intelephense",      -- Garante a instalação do LSP para PHP
+			"stylua", -- Used to format Lua code
+			"intelephense", -- Garante a instalação do LSP para PHP
 			"typescript-language-server", -- Garante a instalação do LSP para JS/TS
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
