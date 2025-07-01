@@ -2,14 +2,13 @@ return {
 	"nvimtools/none-ls.nvim",
 	dependencies = {
 		"nvimtools/none-ls-extras.nvim",
-		"jayp0521/mason-null-ls.nvim", -- ensure dependencies are installed
+		"jayp0521/mason-null-ls.nvim",
 	},
 	config = function()
 		local null_ls = require("null-ls")
-		local formatting = null_ls.builtins.formatting -- to setup formatters
-		local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+		local formatting = null_ls.builtins.formatting
+		local diagnostics = null_ls.builtins.diagnostics
 
-		-- Formatters & linters for mason to install
 		require("mason-null-ls").setup({
 			ensure_installed = {
 				"prettier", -- ts/js formatter
@@ -19,16 +18,28 @@ return {
 				"checkmake", -- linter for Makefiles
 				"ruff", -- Python linter and formatter
 				"phpcbf", -- PHP code formatter
-				-- 'phpstan', -- PHP static analysis (pode ser pesado, considere instalar via composer do projeto)
-				-- 'psalm', -- Outro analisador estático para PHP (escolha um)
 				"hadolint", -- Dockerfile linter
+				"jq",
+				"yamlfmt",
 			},
 			automatic_installation = true,
 		})
 
 		local sources = {
 			diagnostics.checkmake,
-			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown", "css" } }),
+			formatting.prettier.with({
+				filetypes = {
+					"html",
+					"json",
+					"yaml",
+					"markdown",
+					"css",
+					"javascript",
+					"typescript",
+					"javascriptreact",
+					"typescriptreact",
+				},
+			}),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
 			formatting.terraform_fmt,
@@ -36,15 +47,14 @@ return {
 			require("none-ls.formatting.ruff_format"),
 			formatting.phpcbf, -- Adicionado formatação PHP
 			diagnostics.hadolint, -- Adicionado linter Dockerfile
-			-- diagnostics.phpstan, -- Adicionar se instalado
-			-- diagnostics.psalm, -- Adicionar se instalado
+			require("none-ls.formatting.jq").with({ filetypes = { "json" } }),
+			formatting.yamlfmt.with({ filetypes = { "yaml" } }),
 		}
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 		null_ls.setup({
 			-- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
 			sources = sources,
-			-- you can reuse a shared lspconfig on_attach callback here
 			on_attach = function(client, bufnr)
 				if client.supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
